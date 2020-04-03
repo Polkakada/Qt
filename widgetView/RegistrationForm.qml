@@ -5,7 +5,6 @@ import QtQuick.Controls 2.12
 Item {
     id: singUpView
     anchors.fill: parent
-    visible: !singInView.visible
 
     Text {
         id: titleSingUp
@@ -35,7 +34,7 @@ Item {
          anchors.top: signUpLogin.bottom
          anchors.topMargin: 10
          placeholderText: "Password"
-         echoMode: "Password"
+         echoMode: TextInput.Password
     }
 
     TextField {
@@ -46,7 +45,7 @@ Item {
         anchors.top: signUpPassword.bottom
         anchors.topMargin: 10
         placeholderText: "Repeat password"
-        echoMode: "Password"
+        echoMode: TextInput.Password
     }
 
     TextField {
@@ -87,7 +86,7 @@ Item {
         text: "Password values aren't same!"
         font.pixelSize: 16
         visible: false
-        anchors.top: signUpButton.bottom
+        anchors.top: signUpBut.bottom
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
         color: "red"
@@ -95,7 +94,7 @@ Item {
 
     BusyIndicator {
         id: loadingIndicator2
-        anchors.top: signUpButton.bottom
+        anchors.top: signUpBut.bottom
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
         running: false

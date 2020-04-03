@@ -22,7 +22,6 @@ signals:
     void regRequestCompleted(QString);
     void authRequestCompleted(QString,QString);
 
-
 private:
     QNetworkAccessManager _net;
 

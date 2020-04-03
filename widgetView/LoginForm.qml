@@ -5,7 +5,16 @@ import QtQuick.Controls 2.12
 Item {
     id: singInView
     anchors.fill: parent
-    visible: true
+
+    Text {
+        id: titleSingIn
+        color: "black"
+        text: "SING IN"
+        font.pixelSize: 30
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.styleName: "xz"
+    }
 
     TextField {
         id:loginSingIn
@@ -25,18 +34,10 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 10
         anchors.top: loginSingIn.bottom
-        echoMode: "Password"
+        echoMode: TextInput.Password
     }
 
-    Text {
-        id: titleSingIn
-        color: "black"
-        text: "SING IN"
-        font.pixelSize: 30
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.styleName: "xz"
-    }
+
 
     Button {
         id: singInBut

@@ -24,19 +24,16 @@ void AuthManager::authentificate(const QString &login, const QString &password)
     body["password"] = password;
     QByteArray bodyData = QJsonDocument(body).toJson();
 
-
     QNetworkReply *reply = _net.post(request, bodyData);
 
     connect(reply, &QNetworkReply::finished,
-                [this, reply](){
-                QJsonObject obj = QJsonDocument::fromJson(reply -> readAll()).object();
-                QString token = obj.value("token").toString();
-            emit authRequestCompleted(reply -> errorString(), token);
-            reply -> deleteLater();
-        });
+            [this, reply](){
+        QJsonObject obj = QJsonDocument::fromJson(reply -> readAll()).object();
+        QString token = obj.value("token").toString();
+        emit authRequestCompleted(reply -> errorString(), token);
+        reply -> deleteLater();
+    });
 }
-
-
 
 void AuthManager::registerer(const QString &login, const QString &password)
 {
@@ -45,7 +42,6 @@ void AuthManager::registerer(const QString &login, const QString &password)
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       "application/json");
-
     QJsonObject body;
     body["login"] = login;
     body["password"] = password;
@@ -53,11 +49,11 @@ void AuthManager::registerer(const QString &login, const QString &password)
 
     QNetworkReply *reply = _net.post(request, bodyData);
 
-       connect(reply, &QNetworkReply::finished,
-               [this, reply](){
-           emit regRequestCompleted(reply->errorString());
-           reply -> deleteLater();
-       });
+    connect(reply, &QNetworkReply::finished,
+            [this, reply](){
+        emit regRequestCompleted(reply->errorString());
+        reply -> deleteLater();
+    });
 }
 
 
