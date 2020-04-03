@@ -4,15 +4,17 @@ import QtQuick.Controls 2.12
 
 
 Window {
+    id:window
     visible: true
     width: 280
     height: 500
     title: qsTr("Autorization example")
+    property int status: 0
 
     Loader{
         id:mainView
         anchors.fill: parent
-        source: "LoginForm.qml"
+        source: (window.status == 0) ? "LoginForm.qml" : "RegistrationForm.qml"
     }
 
     Row {
@@ -24,34 +26,22 @@ Window {
         Switcher {
             id: singIn
             text: "Sing in"
-            font.underline: !singUp.font.underline
-            anchors.bottom: parent.bottom
-            anchors.right: slash.left
-            onClicked: {
-                mainView.source="LoginForm.qml"
-                singUp.font.underline=false
-            }
+            font.underline: (status == 0) ? true : false
+            onClicked: status = 0
         }
 
         Text {
             id: slash
             text: qsTr(" / ")
-            color: "black"
             font.pixelSize: 20
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
+
         }
 
         Switcher {
             id: singUp
             text: "Sing up"
-            font.underline: singUpView.visible
-            anchors.bottom: parent.bottom
-            anchors.left: slash.right
-            onClicked: {
-                mainView.source="RegistrationForm.qml"
-                singUp.font.underline=true
-            }
+            font.underline: (status == 0) ? false : true
+            onClicked: status = 1
         }
     }
 }

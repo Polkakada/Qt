@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>LoginForm.qml</file>
+        <file>RegistrationForm.qml</file>
+        <file>Switcher.qml</file>
+    </qresource>
+</RCC>
