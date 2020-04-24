@@ -1,10 +1,31 @@
 import QtQuick 2.13
 import QtQuick.Window 2.13
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.1
+import AuthManager 1.0
 
 Item {
     id: singUpView
     anchors.fill: parent
+
+    AuthManager{
+        id:authManagerSignUp
+        onRegistererRequestCompleted: {
+            if (error==""){
+                registerResult.setText("Registering success")
+                registerResult.setInformativeText("")
+            }
+            else{
+                registerResult.setText("Registering unsuccess")
+                registerResult.setInformativeText(error)
+            }
+            registerResult.open()
+        }
+        onRegisterProcessingChanged: {
+            console.log(isRegisterProcessing);
+        }
+    }
+
 
     Text {
         id: titleSingUp
@@ -71,12 +92,11 @@ Item {
         onClicked: {
             console.log("signUpBottom is pressed")
             if (signUpPassword.text != signUpPasswordRepeat.text){
-                passwordWarning.visible = true
-                loadingIndicator.running = false
+                passwordWarning.visible = true             
             }
             else {
                 passwordWarning.visible = false
-                loadingIndicator.running = true
+                authManagerSignUp.registering(signUpLogin.text,signUpPassword.text)
             }
         }
     }
@@ -97,6 +117,13 @@ Item {
         anchors.top: signUpBut.bottom
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
-        running: false
+        running: authManagerSignUp.isRegisterProcessing
+    }
+
+    MessageDialog {
+        id:registerResult
+        title: "Registering"
+        onAccepted:
+            close()
     }
 }

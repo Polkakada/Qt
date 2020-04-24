@@ -1,7 +1,7 @@
 import QtQuick 2.13
 import QtQuick.Window 2.13
 import QtQuick.Controls 2.12
-
+import AuthManager 1.0
 
 Window {
     id:window
