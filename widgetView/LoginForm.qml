@@ -1,10 +1,31 @@
 import QtQuick 2.13
 import QtQuick.Window 2.13
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.1
+import AuthManager 1.0
 
 Item {
     id: singInView
     anchors.fill: parent
+
+    AuthManager{
+        id:authManagerSignIn
+        onAuthenticateRequestCompleted: {
+            if (error==""){
+                loginResult.setText("Sing in success")
+                registerResult.setInformativeText("")
+                console.log(token)
+            }
+            else{
+                loginResult.setText("Sing in unsuccess")
+                loginResult.setInformativeText(error)
+            }
+            loginResult.open()
+        }
+        onLoginProcessingChanged: {
+            console.log(isLoginProcessing);
+        }
+    }
 
     Text {
         id: titleSingIn
@@ -49,7 +70,7 @@ Item {
         anchors.topMargin: 10
         enabled: loginSingIn.length > 5 && passwordSingIn.length > 5
         onClicked: {
-            loadingIndicator1.running = true
+            authManagerSignIn.authenticate(loginSingIn.text,passwordSingIn.text)
         }
     }
 
@@ -58,6 +79,13 @@ Item {
         anchors.top: singInBut.bottom
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
-        running: false
+        running: authManagerSignIn.isLoginProcessing
+    }
+
+    MessageDialog {
+        id:loginResult
+        title: "Sing in"
+        onAccepted:
+            close()
     }
 }
